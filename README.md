@@ -30,10 +30,6 @@ Agno Learning Agent is an interactive chatbot application that provides a ChatGP
 - 🕒 **Timestamps** - Track message timing in conversations
 - 🔄 **Session Management** - Clear chat and reset functionality
 
-## 🎬 Demo
-
-![Agno Agent Demo](https://via.placeholder.com/800x400?text=Add+Your+Screenshot+Here)
-
 ## 🚀 Installation
 
 ### Prerequisites
