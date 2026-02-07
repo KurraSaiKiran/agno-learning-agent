@@ -14,7 +14,7 @@ st.set_page_config(
     page_title="Agno Learning Agent",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto"
 )
 
 # Custom CSS for ChatGPT-like interface
@@ -81,6 +81,33 @@ st.markdown("""
         border: 1px solid #c3e6cb;
         margin: 1rem 0;
     }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .chat-message {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .user-message {
+            margin-left: 0.5rem;
+            border-left-width: 3px;
+        }
+        .assistant-message {
+            border-left-width: 3px;
+        }
+        .message-header {
+            font-size: 0.9rem;
+        }
+        .message-content {
+            font-size: 0.95rem;
+        }
+        .stTextInput > div > div > input {
+            font-size: 14px;
+        }
+        .sidebar-content {
+            padding: 0.5rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -93,8 +120,11 @@ if 'agent' not in st.session_state:
 def initialize_agent():
     """Initialize the Agno agent (simplified since we use OpenAI client directly for responses)"""
     try:
-        # Check for API key
+        # Check for API key in os.getenv or st.secrets
         api_key = os.getenv("GROQ_API_KEY")
+        if not api_key and "GROQ_API_KEY" in st.secrets:
+            api_key = st.secrets["GROQ_API_KEY"]
+            
         if not api_key:
             st.error("Please set your GROQ_API_KEY environment variable")
             return None
@@ -175,6 +205,9 @@ def get_agent_response(agent, user_input):
         
         # Use OpenAI client directly to get the response
         api_key = os.getenv("GROQ_API_KEY")
+        if not api_key and "GROQ_API_KEY" in st.secrets:
+            api_key = st.secrets["GROQ_API_KEY"]
+            
         if not api_key:
             return "Please set your GROQ_API_KEY environment variable to use the agent."
         
